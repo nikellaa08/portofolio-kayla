@@ -1,10 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useLang, useTheme } from "@/components/providers";
 import { cn } from "@/lib/cn";
 
-const SECTION_IDS = ["home", "skills", "projects", "experience", "contact"];
+const SECTION_IDS = ["home", "skills", "experience", "projects", "contact"];
 
 export function Navbar() {
   const { t } = useLang();
@@ -36,7 +38,12 @@ export function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  const pathname = usePathname();
   const links = t.nav.links;
+  const sectionActive = pathname === "/" ? active : "";
+
+  const hrefFor = (id: string) =>
+    id === "home" ? "/" : id === "resume" ? "/resume" : `/#${id}`;
 
   return (
     <header
@@ -49,31 +56,35 @@ export function Navbar() {
         className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-3 px-4 sm:px-8"
         aria-label={t.nav.menu}
       >
-        <a href="#home" className="group flex items-center gap-2" onClick={() => setOpen(false)}>
-          <span className="grid h-9 w-9 place-items-center border-2 border-ink bg-pgreen text-base shadow-pixel-sm transition-transform group-hover:-rotate-6 group-hover:scale-110">
-            ♥
-          </span>
-          <span className="font-pixel text-xs sm:text-sm">{t.nav.brand}</span>
-          <span className="hidden font-pixel text-[8px] text-muted sm:inline">v1.0</span>
-        </a>
+        <Link
+          href="/"
+          onClick={() => setOpen(false)}
+          className="group font-pixel text-xs tracking-wide transition-colors hover:text-pblue sm:text-sm"
+        >
+          {t.nav.brand}
+        </Link>
 
         <ul className="hidden items-center gap-1 md:flex">
-          {links.map((link) => (
-            <li key={link.id}>
-              <a
-                href={`#${link.id}`}
-                aria-current={active === link.id ? "true" : undefined}
-                className={cn(
-                  "px-3 py-2 font-silk text-sm font-bold uppercase transition-colors",
-                  active === link.id
-                    ? "bg-ink text-bg"
-                    : "text-ink hover:bg-pyellow"
-                )}
-              >
-                {link.label}
-              </a>
-            </li>
-          ))}
+          {links.map((link) => {
+            const isActive =
+              link.id === "resume"
+                ? pathname === "/resume"
+                : sectionActive === link.id;
+            return (
+              <li key={link.id}>
+                <a
+                  href={hrefFor(link.id)}
+                  aria-current={isActive ? "true" : undefined}
+                  className={cn(
+                    "px-3 py-2 font-silk text-sm font-bold uppercase transition-colors",
+                    isActive ? "bg-ink text-bg" : "text-ink hover:bg-pyellow"
+                  )}
+                >
+                  {link.label}
+                </a>
+              </li>
+            );
+          })}
         </ul>
 
         <div className="flex items-center gap-2">
@@ -113,7 +124,7 @@ export function Navbar() {
             {links.map((link, i) => (
               <li key={link.id} className="border-b-2 border-dashed border-ink last:border-0">
                 <a
-                  href={`#${link.id}`}
+                  href={hrefFor(link.id)}
                   onClick={() => setOpen(false)}
                   className="flex items-center gap-3 py-3 font-silk text-base font-bold uppercase"
                 >

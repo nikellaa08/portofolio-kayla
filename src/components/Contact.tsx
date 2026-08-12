@@ -39,7 +39,7 @@ export function Contact() {
                 </span>
                 <span className="min-w-0">
                   <span className="block font-pixel text-[9px] text-muted">{item.label}</span>
-                  <span className="block truncate font-silk text-sm font-bold sm:text-base">
+                  <span className="block truncate font-body text-sm font-bold sm:text-base">
                     {item.value}
                   </span>
                 </span>
@@ -56,15 +56,15 @@ export function Contact() {
 
         <div className="mt-8 flex flex-col items-center gap-4 border-4 border-dashed border-ink bg-surface p-5 sm:flex-row sm:justify-between">
           <div>
-            <p className="font-silk text-sm font-bold sm:text-base">{t.contact.note}</p>
+            <p className="font-body text-sm font-bold sm:text-base">{t.contact.note}</p>
           </div>
           <div className="flex flex-wrap items-center gap-3">
-            <PixelButton href="/cv.pdf" variant="red" download>
-              ⬇ {t.contact.cvCta} <span className="font-silk normal-case">({t.contact.cvHint})</span>
+            <PixelButton href="/resume" variant="red">
+              ➜ {t.contact.cvCta}
             </PixelButton>
             <a
               href="mailto:nikellaa08@gmail.com"
-              className="font-silk text-sm font-bold underline decoration-4 underline-offset-4 transition-colors hover:text-pblue"
+              className="font-body text-sm font-bold underline decoration-4 underline-offset-4 transition-colors hover:text-pblue"
             >
               {t.contact.emailCta}
             </a>

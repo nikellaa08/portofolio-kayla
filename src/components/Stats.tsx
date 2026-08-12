@@ -1,9 +1,67 @@
 "use client";
 
+import type { IconType } from "react-icons";
+import {
+  SiAdobeillustrator,
+  SiCanva,
+  SiDart,
+  SiFlutter,
+  SiGit,
+  SiGithub,
+  SiGoogle,
+  SiGooglesheets,
+  SiJavascript,
+  SiMicrosoftexcel,
+  SiMicrosoftword,
+  SiMysql,
+  SiNextdotjs,
+  SiNodedotjs,
+  SiOpenai,
+  SiPhp,
+  SiTailwindcss,
+  SiVisualstudiocode,
+} from "react-icons/si";
+import { FaCut } from "react-icons/fa";
+import { MdAutoAwesome } from "react-icons/md";
 import { useLang } from "@/components/providers";
 import { Chip, SectionHeader, StatBar } from "@/components/ui";
 
 const TRAIT_COLORS = ["#4ade80", "#60a5fa", "#facc15", "#f87171", "#fb923c"];
+
+/**
+ * Simple Icons logo per tool. `SiCapcut` and `SiGooglegemini` were never
+ * shipped in react-icons, so CapCut falls back to a scissors icon and Gemini
+ * to the Material "auto awesome" sparkle (Gemini's actual logo shape).
+ * Freebuf / Qwen / Codex have no brand icon, so they render text-only chips.
+ */
+const TOOL_ICONS: Record<string, IconType> = {
+  "Microsoft Word": SiMicrosoftword,
+  "Microsoft Excel": SiMicrosoftexcel,
+  "Google Spreadsheet": SiGooglesheets,
+  "Adobe Illustrator": SiAdobeillustrator,
+  Canva: SiCanva,
+  CapCut: FaCut,
+  Flutter: SiFlutter,
+  Dart: SiDart,
+  PHP: SiPhp,
+  JavaScript: SiJavascript,
+  "Node.js": SiNodedotjs,
+  "Next.js": SiNextdotjs,
+  "Tailwind CSS": SiTailwindcss,
+  MySQL: SiMysql,
+  "Visual Studio Code": SiVisualstudiocode,
+  Git: SiGit,
+  GitHub: SiGithub,
+  OpenAI: SiOpenai,
+  Gemini: MdAutoAwesome,
+  "Google Stitch": SiGoogle,
+};
+
+const FALLBACK_ICON = (
+  <span className="text-[10px] leading-none text-muted" aria-hidden="true">
+    ✦
+  </span>
+);
 
 export function Stats() {
   const { t } = useLang();
@@ -26,16 +84,23 @@ export function Stats() {
               <h3 className="font-pixel text-[11px]">
                 🧰 {t.stats.equipmentTitle}
               </h3>
-              <span className="font-pixel text-[8px] text-ink/70">[LOG]</span>
+              <span className="font-pixel text-[8px] text-ink/70">[{t.stats.equipmentTag}]</span>
             </div>
             <div className="space-y-5 p-4 sm:p-5">
               {t.stats.categories.map((cat) => (
                 <div key={cat.name}>
-                  <p className="mb-2 font-pixel text-[9px] text-muted">▸ {cat.name}</p>
+                  <p className="mb-2.5 font-body text-sm font-bold text-ink sm:text-base">
+                    ▸ {cat.name}
+                  </p>
                   <div className="flex flex-wrap gap-2">
-                    {cat.items.map((item) => (
-                      <Chip key={item}>{item}</Chip>
-                    ))}
+                    {cat.items.map((item) => {
+                      const Icon = TOOL_ICONS[item];
+                      return (
+                        <Chip key={item} icon={Icon ? <Icon /> : FALLBACK_ICON}>
+                          {item}
+                        </Chip>
+                      );
+                    })}
                   </div>
                 </div>
               ))}
@@ -52,10 +117,10 @@ export function Stats() {
               {t.stats.traits.map((trait, i) => (
                 <div key={trait.name} className="py-3 first:pt-0 last:pb-0">
                   <div className="flex items-baseline justify-between gap-3">
-                    <p className="font-silk text-sm font-bold sm:text-base">{trait.name}</p>
+                    <p className="font-body text-base font-bold sm:text-lg">{trait.name}</p>
                     <p className="font-pixel text-[9px] text-muted">{trait.stat}%</p>
                   </div>
-                  <p className="mt-0.5 text-xs text-muted sm:text-sm">{trait.desc}</p>
+                  <p className="mt-1 text-sm leading-relaxed text-muted sm:text-base">{trait.desc}</p>
                   <div className="mt-2">
                     <StatBar value={trait.stat} color={TRAIT_COLORS[i % TRAIT_COLORS.length]} />
                   </div>

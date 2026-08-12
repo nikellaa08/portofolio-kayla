@@ -16,8 +16,7 @@ export function Footer() {
         ))}
       </div>
       <div className="mx-auto max-w-6xl space-y-2 px-4 py-8 text-center sm:px-8">
-        <p className="font-silk text-sm font-bold">{t.footer.text}</p>
-        <p className="font-pixel text-[9px] text-muted">{t.footer.madeWith}</p>
+        <p className="font-body text-sm font-bold sm:text-base">{t.footer.text}</p>
       </div>
     </footer>
   );

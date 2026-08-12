@@ -38,7 +38,7 @@ export function Experience() {
 
                 <article className="border-4 border-ink bg-bg p-4 shadow-pixel-sm sm:p-5">
                   <div className="flex flex-wrap items-center justify-between gap-2">
-                    <h3 className="font-pixel text-[11px] sm:text-xs">{entry.title}</h3>
+                    <h3 className="font-pixel text-xs sm:text-sm">{entry.title}</h3>
                     <span
                       className={cn(
                         "border-2 border-ink px-2 py-1 font-pixel text-[8px] shadow-pixel-sm",
@@ -55,21 +55,7 @@ export function Experience() {
                     </p>
                   ) : null}
 
-                  {/* bullet points */}
-                  {"bullets" in entry && entry.bullets ? (
-                    <ul className="mt-3 space-y-1.5">
-                      {entry.bullets.map((bullet) => (
-                        <li key={bullet} className="flex items-start gap-2 text-sm text-muted sm:text-base">
-                          <span className="mt-0.5 text-pyellow" aria-hidden="true">
-                            ▪
-                          </span>
-                          {bullet}
-                        </li>
-                      ))}
-                    </ul>
-                  ) : null}
-
-                  {/* sub-activities */}
+                  {/* sub-cards (projects & organizational activities) */}
                   {"subs" in entry && entry.subs ? (
                     <div className="mt-4 space-y-3">
                       {entry.subs.map((sub) => (
@@ -77,8 +63,8 @@ export function Experience() {
                           key={sub.name}
                           className="border-2 border-ink bg-surface p-3 transition-transform hover:-translate-y-0.5"
                         >
-                          <p className="font-silk text-sm font-bold">▸ {sub.name}</p>
-                          <p className="mt-1 text-sm text-muted">{sub.desc}</p>
+                          <p className="font-body text-sm font-bold sm:text-base">▸ {sub.name}</p>
+                          <p className="mt-1 text-sm leading-relaxed text-muted">{sub.desc}</p>
                         </div>
                       ))}
                     </div>
@@ -93,11 +79,11 @@ export function Experience() {
                           className="flex flex-col gap-1 border-2 border-ink bg-surface p-3 sm:flex-row sm:items-center sm:justify-between"
                         >
                           <div>
-                            <p className="font-silk text-sm font-bold">
+                            <p className="font-body text-sm font-bold sm:text-base">
                               🎓 {school.name}
                             </p>
                             {school.detail ? (
-                              <p className="mt-0.5 text-xs text-muted">{school.detail}</p>
+                              <p className="mt-0.5 text-sm text-muted">{school.detail}</p>
                             ) : null}
                           </div>
                           <span className="font-pixel text-[9px] text-muted">{school.period}</span>

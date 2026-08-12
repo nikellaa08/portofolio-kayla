@@ -1,7 +1,6 @@
 "use client";
 
 import { useLang } from "@/components/providers";
-import { PixelAvatar } from "@/components/PixelAvatar";
 import { PixelButton } from "@/components/ui";
 import { Marquee } from "@/components/Marquee";
 
@@ -66,8 +65,8 @@ export function Hero() {
               <PixelButton href="#projects" variant="green">
                 {t.hero.ctaProjects} <span aria-hidden="true">➔</span>
               </PixelButton>
-              <PixelButton href="/cv.pdf" variant="yellow" download>
-                {t.hero.ctaCv} <span aria-hidden="true">⬇</span>
+              <PixelButton href="/resume" variant="yellow">
+                {t.hero.ctaResume}
               </PixelButton>
               <PixelButton href="#contact" variant="blue">
                 {t.hero.ctaContact} <span aria-hidden="true">✉</span>
@@ -77,45 +76,39 @@ export function Hero() {
 
           {/* Character sheet card */}
           <div className="relative mx-auto w-full max-w-sm">
-            <span
-              aria-hidden="true"
-              className="absolute -top-5 -right-2 z-10 rotate-12 border-2 border-ink bg-pred px-2 py-1 font-pixel text-[8px] shadow-pixel-sm"
-            >
-              PLAYER 1
+            <span className="absolute -top-5 -right-2 z-10 rotate-12 border-2 border-ink bg-pred px-2 py-1 font-pixel text-[8px] shadow-pixel-sm">
+              {t.hero.cardBadge}
             </span>
             <div className="rotate-2 border-4 border-ink bg-surface p-4 shadow-pixel-lg transition-transform duration-300 hover:rotate-0">
               <div className="flex items-center justify-between border-b-4 border-ink pb-2">
                 <span className="font-pixel text-[10px]">{t.hero.avatarLabel} SHEET</span>
-                <span className="font-pixel text-[8px] text-muted">{t.hero.lvl}</span>
+                <span className="font-pixel text-[8px] text-muted" aria-hidden="true">
+                  ✦ ✦
+                </span>
               </div>
 
               <div className="relative mx-auto my-4 w-52 sm:w-60">
-                <PixelAvatar className="w-full border-4 border-ink bg-bg" />
+                <div className="border-4 border-ink bg-bg p-1 shadow-pixel-sm">
+                  {/* eslint-disable-next-line @next/next/no-img-element -- user wants a plain <img> they can swap with their own photo */}
+                  <img
+                    src={t.hero.photoSrc}
+                    alt={t.hero.photoAlt}
+                    width={300}
+                    height={300}
+                    loading="lazy"
+                    className="block h-auto w-full"
+                  />
+                </div>
                 <span className="absolute -bottom-2 left-1/2 -translate-x-1/2 border-2 border-ink bg-pyellow px-2 py-0.5 font-pixel text-[8px] shadow-pixel-sm">
                   KAYLA
                 </span>
               </div>
 
-              <div className="space-y-2 border-t-4 border-ink pt-3 font-silk text-xs font-bold sm:text-sm">
-                <div className="flex items-center gap-2">
-                  <span className="w-8 text-muted">{t.hero.hp}</span>
-                  <div className="h-4 flex-1 border-2 border-ink bg-bg">
-                    <div className="h-full w-full bg-pgreen" />
-                  </div>
-                  <span>100</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="w-8 text-muted">{t.hero.exp}</span>
-                  <div className="h-4 flex-1 border-2 border-ink bg-bg">
-                    <div className="h-full w-full bg-pyellow" />
-                  </div>
-                  <span>100%</span>
-                </div>
-              </div>
-
-              <div className="mt-3 flex flex-wrap gap-2 border-t-2 border-dashed border-ink pt-3 font-pixel text-[8px]">
-                <span className="border-2 border-ink bg-pblue px-2 py-1">{t.hero.race}</span>
-                <span className="border-2 border-ink bg-pgreen px-2 py-1">{t.hero.classLabel}</span>
+              <div className="border-t-4 border-ink pt-3">
+                <p className="font-pixel text-[8px] text-muted">✦ MOTTO ✦</p>
+                <p className="mt-2 border-l-4 border-pyellow pl-3 font-body text-sm font-bold leading-relaxed italic sm:text-base">
+                  “{t.hero.motto}”
+                </p>
               </div>
             </div>
           </div>

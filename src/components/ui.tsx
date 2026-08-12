@@ -51,14 +51,26 @@ export function PixelButton({
   );
 }
 
-export function Chip({ children, className }: { children: ReactNode; className?: string }) {
+export function Chip({
+  children,
+  className,
+  icon,
+  compact,
+}: {
+  children: ReactNode;
+  className?: string;
+  icon?: ReactNode;
+  compact?: boolean;
+}) {
   return (
     <span
       className={cn(
-        "inline-flex items-center border-2 border-ink bg-bg px-2.5 py-1 font-silk text-xs font-bold shadow-pixel-sm transition-transform hover:-translate-y-0.5",
+        "inline-flex items-center gap-1.5 border-2 border-ink bg-bg font-silk text-xs font-bold shadow-pixel-sm transition-transform hover:-translate-y-0.5",
+        compact ? "px-2 py-0.5" : "px-2.5 py-1",
         className
       )}
     >
+      {icon ? <span className="shrink-0 text-sm" aria-hidden="true">{icon}</span> : null}
       {children}
     </span>
   );
@@ -94,7 +106,7 @@ export function SectionHeader({
         </span>
         {title}
       </h2>
-      <p className="mt-3 font-silk text-base font-bold text-muted sm:text-lg">{subtitle}</p>
+      <p className="mt-3 font-body text-base font-bold text-muted sm:text-lg">{subtitle}</p>
       <div className="mt-4 flex h-2 w-full max-w-xs border-2 border-ink" aria-hidden="true">
         {["bg-pgreen", "bg-pred", "bg-pyellow", "bg-pblue"].map((c) => (
           <span key={c} className={cn("flex-1", c)} />
